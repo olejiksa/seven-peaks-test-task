@@ -20,9 +20,9 @@ final class FeedDateFormatter: DateFormatter {
         }
 
         if isSetTo24Hours {
-            timeFormat = "h:mm a"
-        } else {
             timeFormat = "H:mm"
+        } else {
+            timeFormat = "h:mm a"
         }
 
         self.dateFormat = "\(dateFormat), \(timeFormat)"

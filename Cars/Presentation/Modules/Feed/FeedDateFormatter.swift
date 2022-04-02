@@ -10,18 +10,16 @@ import Foundation
 final class FeedDateFormatter: DateFormatter {
 
     override func string(from date: Date) -> String {
+        let dateFormat: String
         let timeFormat: String
-        var dateFormat = "d MMMM"
 
-        let dateYear = Calendar.current.component(.year, from: date)
-        let nowYear = Calendar.current.component(.year, from: .init())
-
-        if dateYear != nowYear {
-            dateFormat += " y"
+        if isCurrentYear(date) {
+            dateFormat = "d MMMM"
+        } else {
+            dateFormat = "d MMMM y"
         }
 
-        let formatter = DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: .current)
-        if formatter?.contains("a") ?? false {
+        if isSetTo24Hours {
             timeFormat = "h:mm a"
         } else {
             timeFormat = "H:mm"
@@ -29,5 +27,22 @@ final class FeedDateFormatter: DateFormatter {
 
         self.dateFormat = "\(dateFormat), \(timeFormat)"
         return super.string(from: date)
+    }
+}
+
+// MARK: - Private
+
+private extension FeedDateFormatter {
+
+    var isSetTo24Hours: Bool {
+        let formatter = DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: .current)
+        return formatter?.contains("a") != true
+    }
+
+    func isCurrentYear(_ date: Date) -> Bool {
+        let dateYear = Calendar.current.component(.year, from: date)
+        let nowYear = Calendar.current.component(.year, from: .init())
+
+        return dateYear == nowYear
     }
 }

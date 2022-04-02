@@ -21,7 +21,8 @@ final class FeedViewController: UITableViewController {
 
     // MARK: Private Properties
 
-    private let disposeBag = DisposeBag()
+    private lazy var dateFormatter = FeedDateFormatter()
+    private lazy var disposeBag = DisposeBag()
 
     // MARK: Dependency Injection
 
@@ -95,11 +96,27 @@ private extension FeedViewController {
     func bind(items: Observable<[Article]>) {
         let cellType = PostCell.self
         let bindedItems = items.bind(to: tableView.rx.items(cellIdentifier: "\(cellType)",
-                                                            cellType: cellType)) { row, article, cell in
-            cell.setup(article: article)
+                                                            cellType: cellType)) { [weak self] _, article, cell in
+            guard let self = self else { return }
+            let date = self.dateFormatter.string(from: article.publishDate)
+            let post = Post(ingress: article.ingress, title: article.title, date: date)
+            cell.set(post: post)
+            self.setImageURL(in: article, for: cell)
         }
 
         bindedItems.disposed(by: disposeBag)
+    }
+
+    func setImageURL(in article: Article, for cell: PostCell) {
+        DispatchQueue.global(qos: .userInteractive).async {
+            guard let url = article.imageURL,
+                  let data = try? Data(contentsOf: url) else { return }
+
+            DispatchQueue.main.async {
+                let image = UIImage(data: data)
+                cell.set(image: image, animated: true)
+            }
+        }
     }
 
     func showModal(title: String, message: String) {

@@ -31,7 +31,7 @@ struct Article: Decodable {
         case title
         case ingress
         case imageURL = "image"
-        case date = "dateTime"
+        case publishDate = "dateTime"
         case tags
         case items = "content"
         case creationDate = "created"
@@ -42,7 +42,7 @@ struct Article: Decodable {
     let title: String
     let ingress: String
     let imageURL: URL?
-    let date: Date
+    let publishDate: Date
     let tags: [String]
     let items: [Item]
     let creationDate: Date

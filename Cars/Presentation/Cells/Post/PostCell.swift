@@ -12,34 +12,42 @@ final class PostCell: UITableViewCell {
     // MARK: Private Types
 
     private enum Constants {
-        static let dateTimeLabelLineHeight: CGFloat = 21
+        static let duration: CGFloat = 0.25
     }
 
     // MARK: Private Properties
 
     @IBOutlet private weak var pictureView: UIImageView!
-    @IBOutlet private weak var shadingView: UIView!
     @IBOutlet private weak var ingressLabel: UILabel!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var dateTimeLabel: UILabel!
 
     // MARK: Lifecycle
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override func prepareForReuse() {
+        super.prepareForReuse()
 
-        
+        pictureView.image = nil
     }
 
     // MARK: Public Methods
 
-    func setup(article: Article) {
-        if let url = article.imageURL, let data = try? Data(contentsOf: url) {
-            pictureView.image = UIImage(data: data)
-        }
+    func set(image: UIImage?, animated: Bool) {
+        pictureView.image = image
 
-        ingressLabel.text = article.ingress
-        titleLabel.text = article.title
-        dateTimeLabel.text = "\(article.date)"
+        guard animated else { return }
+
+        let transition = CATransition()
+        transition.duration = Constants.duration
+        transition.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
+        transition.type = .fade
+
+        pictureView.layer.add(transition, forKey: nil)
+    }
+
+    func set(post: Post) {
+        ingressLabel.text = post.ingress
+        titleLabel.text = post.title
+        dateTimeLabel.text = post.date
     }
 }

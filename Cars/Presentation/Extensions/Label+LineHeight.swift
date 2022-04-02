@@ -1,5 +1,5 @@
 //
-//  TypographyExtensions.swift
+//  Label+LineHeight.swift
 //  Cars
 //
 //  Created by Oleg Samoylov on 02.04.2022.
@@ -7,17 +7,9 @@
 
 import UIKit
 
-protocol Typography: UILabel {
+extension UILabel {
 
-    var lineHeight: CGFloat { get set }
-}
-
-// MARK: - TypographyExtensions
-
-extension UILabel: Typography {
-
-    @IBInspectable
-    var lineHeight: CGFloat {
+    @IBInspectable var lineHeight: CGFloat {
         get {
             paragraphStyle?.maximumLineHeight ?? 0
         }
@@ -79,7 +71,7 @@ private extension UILabel {
 private extension NSAttributedString {
 
     var entireRange: NSRange {
-        NSRange(location: 0, length: self.length)
+        NSRange(location: 0, length: length)
     }
 
     func stringByAddingAttribute(_ key: NSAttributedString.Key, value: Any) -> NSAttributedString {

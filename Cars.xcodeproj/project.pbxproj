@@ -26,9 +26,12 @@
 		EB178A2E27F5A27E005C5536 /* CarsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB178A2D27F5A27E005C5536 /* CarsTests.swift */; };
 		EB178A3827F5A27E005C5536 /* CarsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB178A3727F5A27E005C5536 /* CarsUITests.swift */; };
 		EB178A3A27F5A27E005C5536 /* CarsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB178A3927F5A27E005C5536 /* CarsUITestsLaunchTests.swift */; };
+		EB80F9F827F7C7A5003177E2 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB80F9F727F7C7A5003177E2 /* Post.swift */; };
+		EB80F9FA27F7D8B2003177E2 /* FeedDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB80F9F927F7D8B2003177E2 /* FeedDateFormatter.swift */; };
 		EBCA936927F751430013260B /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCA936727F751420013260B /* PostCell.swift */; };
 		EBCA936A27F751430013260B /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBCA936827F751420013260B /* PostCell.xib */; };
-		EBCA937027F765970013260B /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCA936F27F765970013260B /* Typography.swift */; };
+		EBCA937027F765970013260B /* Label+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCA936F27F765970013260B /* Label+LineHeight.swift */; };
+		EBCA937227F78CEC0013260B /* LinearGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCA937127F78CEC0013260B /* LinearGradientView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,9 +81,12 @@
 		EB178A3327F5A27E005C5536 /* CarsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB178A3727F5A27E005C5536 /* CarsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsUITests.swift; sourceTree = "<group>"; };
 		EB178A3927F5A27E005C5536 /* CarsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		EB80F9F727F7C7A5003177E2 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		EB80F9F927F7D8B2003177E2 /* FeedDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FeedDateFormatter.swift; path = Cars/Presentation/Modules/Feed/FeedDateFormatter.swift; sourceTree = SOURCE_ROOT; };
 		EBCA936727F751420013260B /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		EBCA936827F751420013260B /* PostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCell.xib; sourceTree = "<group>"; };
-		EBCA936F27F765970013260B /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		EBCA936F27F765970013260B /* Label+LineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Label+LineHeight.swift"; sourceTree = "<group>"; };
+		EBCA937127F78CEC0013260B /* LinearGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGradientView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +143,7 @@
 		EB039AB827F6145B0039EF76 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				EB80F9F927F7D8B2003177E2 /* FeedDateFormatter.swift */,
 				EB039AD827F6E3480039EF76 /* FeedViewController.swift */,
 				EB039AD927F6E3480039EF76 /* FeedView.xib */,
 			);
@@ -201,8 +208,9 @@
 			isa = PBXGroup;
 			children = (
 				EBCA936D27F7516B0013260B /* Cells */,
-				EBCA936E27F765820013260B /* Extensions */,
+				EBCA937327F78CF30013260B /* Extensions */,
 				EBCA936C27F751660013260B /* Modules */,
+				EBCA936E27F765820013260B /* Views */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -263,6 +271,7 @@
 		EBCA936B27F7514B0013260B /* Post */ = {
 			isa = PBXGroup;
 			children = (
+				EB80F9F727F7C7A5003177E2 /* Post.swift */,
 				EBCA936727F751420013260B /* PostCell.swift */,
 				EBCA936827F751420013260B /* PostCell.xib */,
 			);
@@ -285,10 +294,18 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		EBCA936E27F765820013260B /* Extensions */ = {
+		EBCA936E27F765820013260B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				EBCA936F27F765970013260B /* Typography.swift */,
+				EBCA937127F78CEC0013260B /* LinearGradientView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EBCA937327F78CF30013260B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EBCA936F27F765970013260B /* Label+LineHeight.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -552,15 +569,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB039AC927F618DF0039EF76 /* RequestMethod.swift in Sources */,
+				EB80F9FA27F7D8B2003177E2 /* FeedDateFormatter.swift in Sources */,
 				EB039AD227F627C60039EF76 /* ArticlesEndpoint.swift in Sources */,
 				EB039ADA27F6E3480039EF76 /* FeedViewController.swift in Sources */,
 				EB039ACB27F618F50039EF76 /* RequestError.swift in Sources */,
 				EB039ACE27F619B70039EF76 /* Article.swift in Sources */,
+				EB80F9F827F7C7A5003177E2 /* Post.swift in Sources */,
 				EB039AD727F637920039EF76 /* Response.swift in Sources */,
 				EB039AD027F61F1A0039EF76 /* HTTPClient.swift in Sources */,
 				EB039AC727F618B60039EF76 /* Endpoint.swift in Sources */,
-				EBCA937027F765970013260B /* Typography.swift in Sources */,
+				EBCA937027F765970013260B /* Label+LineHeight.swift in Sources */,
 				EBCA936927F751430013260B /* PostCell.swift in Sources */,
+				EBCA937227F78CEC0013260B /* LinearGradientView.swift in Sources */,
 				EB039AD427F6297A0039EF76 /* ArticlesService.swift in Sources */,
 				EB178A1727F5A27B005C5536 /* AppDelegate.swift in Sources */,
 			);

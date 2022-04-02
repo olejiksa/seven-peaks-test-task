@@ -41,8 +41,7 @@ private extension FeedDateFormatter {
 
     func isCurrentYear(_ date: Date) -> Bool {
         let dateYear = Calendar.current.component(.year, from: date)
-        let nowYear = Calendar.current.component(.year, from: .init())
-
-        return dateYear == nowYear
+        let currentYear = Calendar.current.component(.year, from: .init())
+        return dateYear == currentYear
     }
 }

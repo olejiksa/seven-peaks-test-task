@@ -5,6 +5,7 @@
 //  Created by Oleg Samoylov on 02.04.2022.
 //
 
+import RxSwift
 import UIKit
 
 final class PostCell: UITableViewCell {
@@ -15,6 +16,18 @@ final class PostCell: UITableViewCell {
         static let duration: CGFloat = 0.25
     }
 
+    // MARK: Public Properties
+
+    var post: Post? {
+        didSet {
+            guard let post = post else { return }
+            set(imageURL: post.imageURL)
+            ingressLabel.text = post.ingress
+            titleLabel.text = post.title
+            dateTimeLabel.text = post.date
+        }
+    }
+
     // MARK: Private Properties
 
     @IBOutlet private weak var pictureView: UIImageView!
@@ -22,32 +35,55 @@ final class PostCell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var dateTimeLabel: UILabel!
 
+    private var disposable: Disposable?
+
     // MARK: Lifecycle
 
     override func prepareForReuse() {
         super.prepareForReuse()
 
+        disposable?.dispose()
         pictureView.image = nil
     }
+}
 
-    // MARK: Public Methods
+// MARK: Private
 
-    func set(image: UIImage?, animated: Bool) {
-        pictureView.image = image
+private extension PostCell {
 
-        guard animated else { return }
+    func set(imageURL: URL?) {
+        guard let imageURL = imageURL else { return }
 
-        let transition = CATransition()
-        transition.duration = Constants.duration
-        transition.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
-        transition.type = .fade
+        disposable = loadImage(url: imageURL)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak pictureView] in
+                pictureView?.image = $0
 
-        pictureView.layer.add(transition, forKey: nil)
+                let transition = CATransition()
+                transition.duration = Constants.duration
+                transition.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
+                transition.type = .fade
+
+                pictureView?.layer.add(transition, forKey: nil)
+            })
     }
 
-    func set(post: Post) {
-        ingressLabel.text = post.ingress
-        titleLabel.text = post.title
-        dateTimeLabel.text = post.date
+    func loadImage(url: URL) -> Observable<UIImage?> {
+        Observable<UIImage?>.create { emitter in
+            let task = URLSession.shared.dataTask(with: url) { data, _, _ in
+                guard let data = data else {
+                    emitter.onNext(nil)
+                    emitter.onCompleted()
+                    return
+                }
+
+                let image = UIImage(data: data)
+                emitter.onNext(image)
+                emitter.onCompleted()
+            }
+
+            task.resume()
+            return Disposables.create { task.cancel() }
+        }
     }
 }

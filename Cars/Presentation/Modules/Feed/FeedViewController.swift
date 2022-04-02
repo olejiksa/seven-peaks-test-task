@@ -5,11 +5,10 @@
 //  Created by Oleg Samoylov on 01.04.2022.
 //
 
-import RxCocoa
 import RxSwift
 import UIKit
 
-final class FeedViewController: UITableViewController {
+final class FeedViewController: UIViewController {
 
     // MARK: Private Types
 
@@ -21,15 +20,43 @@ final class FeedViewController: UITableViewController {
 
     // MARK: Private Properties
 
-    private lazy var dateFormatter = FeedDateFormatter()
-    private lazy var disposeBag = DisposeBag()
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.delegate = nil
+        tableView.dataSource = nil
+
+        tableView.allowsSelection = false
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.tableFooterView = .init()
+
+        let cellID = "\(PostCell.self)"
+        let nib = UINib(nibName: cellID, bundle: .main)
+        tableView.register(nib, forCellReuseIdentifier: cellID)
+
+        return tableView
+    }()
+
+    private let activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        if #available(iOS 13.0, *) {
+            activityIndicator.style = .large
+        } else {
+            activityIndicator.style = .whiteLarge
+        }
+        activityIndicator.hidesWhenStopped = true
+        return activityIndicator
+    }()
+
+    private let disposeBag = DisposeBag()
 
     // MARK: Dependency Injection
 
-    private let service: ArticlesService
+    private let viewModel: FeedViewModel
 
-    init(service: ArticlesService) {
-        self.service = service
+    init(viewModel: FeedViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -37,14 +64,14 @@ final class FeedViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: Lifecycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupTitle()
-        setupTableView()
-        setupData()
+        bindViewModel()
+        setupUI()
+        setupConstaints()
+
+        viewModel.getPosts()
     }
 }
 
@@ -52,71 +79,57 @@ final class FeedViewController: UITableViewController {
 
 private extension FeedViewController {
 
-    func setupTitle() {
-        title = Constants.title
-    }
+    func bindViewModel() {
+        let cellType = PostCell.self
 
-    func setupTableView() {
-        tableView.delegate = nil
-        tableView.dataSource = nil
+        viewModel
+            .items
+            .bind(to: tableView.rx.items(cellIdentifier: "\(cellType)", cellType: cellType)) { $2.post = $1 }
+            .disposed(by: disposeBag)
 
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.tableFooterView = UIView()
-
-        let cellID = "\(PostCell.self)"
-        let nib = UINib(nibName: cellID, bundle: .main)
-        tableView.register(nib, forCellReuseIdentifier: cellID)
-    }
-
-    func setupData() {
-        let completion: (Result<Response<Article>, RequestError>) -> Void = { [weak self] result in
-            guard let self = self else { return }
-
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let response):
-                    let items = Observable.just(response.items)
-                    self.bind(items: items)
-                case .failure(let error):
-                    self.showModal(title: Constants.error, message: error.description)
+        viewModel
+            .onShowLoading
+            .map { [weak activityIndicator] stopped in
+                if stopped {
+                    activityIndicator?.startAnimating()
+                } else {
+                    activityIndicator?.stopAnimating()
                 }
             }
-        }
+            .subscribe()
+            .disposed(by: disposeBag)
 
-        if #available(iOS 15, *) {
-            Task(priority: .background) {
-                let result = await service.getAll()
-                completion(result)
+        viewModel
+            .onShowError
+            .map { [weak self] in
+                guard let message = $0 else { return }
+                self?.showModal(title: Constants.error, message: message)
             }
-        } else {
-            service.getAll(completion: completion)
-        }
+            .subscribe()
+            .disposed(by: disposeBag)
     }
 
-    func bind(items: Observable<[Article]>) {
-        let cellType = PostCell.self
-        let bindedItems = items.bind(to: tableView.rx.items(cellIdentifier: "\(cellType)",
-                                                            cellType: cellType)) { [weak self] _, article, cell in
-            guard let self = self else { return }
-            let date = self.dateFormatter.string(from: article.publishDate)
-            let post = Post(ingress: article.ingress, title: article.title, date: date)
-            cell.set(post: post)
-            self.setImageURL(in: article, for: cell)
-        }
-
-        bindedItems.disposed(by: disposeBag)
+    func setupUI() {
+        title = Constants.title
+        view.backgroundColor = .black
+        UINavigationBar.configureAppearance()
     }
 
-    func setImageURL(in article: Article, for cell: PostCell) {
-        DispatchQueue.global(qos: .userInteractive).async {
-            guard let url = article.imageURL,
-                  let data = try? Data(contentsOf: url) else { return }
-
-            DispatchQueue.main.async {
-                let image = UIImage(data: data)
-                cell.set(image: image, animated: true)
-            }
+    func setupConstaints() {
+        [tableView, activityIndicator].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
         }
+
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 
     func showModal(title: String, message: String) {

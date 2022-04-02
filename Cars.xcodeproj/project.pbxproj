@@ -19,13 +19,16 @@
 		EB039AD427F6297A0039EF76 /* ArticlesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB039AD327F6297A0039EF76 /* ArticlesService.swift */; };
 		EB039AD727F637920039EF76 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB039AD627F637920039EF76 /* Response.swift */; };
 		EB039ADA27F6E3480039EF76 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB039AD827F6E3480039EF76 /* FeedViewController.swift */; };
-		EB039ADB27F6E3480039EF76 /* FeedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB039AD927F6E3480039EF76 /* FeedView.xib */; };
 		EB178A1727F5A27B005C5536 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB178A1627F5A27B005C5536 /* AppDelegate.swift */; };
 		EB178A2027F5A27E005C5536 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB178A1F27F5A27E005C5536 /* Assets.xcassets */; };
 		EB178A2327F5A27E005C5536 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB178A2127F5A27E005C5536 /* LaunchScreen.storyboard */; };
 		EB178A2E27F5A27E005C5536 /* CarsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB178A2D27F5A27E005C5536 /* CarsTests.swift */; };
 		EB178A3827F5A27E005C5536 /* CarsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB178A3727F5A27E005C5536 /* CarsUITests.swift */; };
 		EB178A3A27F5A27E005C5536 /* CarsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB178A3927F5A27E005C5536 /* CarsUITestsLaunchTests.swift */; };
+		EB7D2F8927F8C9DE00908500 /* NavigationBar+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7D2F8827F8C9DE00908500 /* NavigationBar+Appearance.swift */; };
+		EB7D2F8B27F8D38E00908500 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7D2F8A27F8D38E00908500 /* FeedViewModel.swift */; };
+		EB7D2F9127F9078700908500 /* FeedAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7D2F9027F9078700908500 /* FeedAssembly.swift */; };
+		EB7D2F9327F9080000908500 /* Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7D2F9227F9080000908500 /* Assembly.swift */; };
 		EB80F9F827F7C7A5003177E2 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB80F9F727F7C7A5003177E2 /* Post.swift */; };
 		EB80F9FA27F7D8B2003177E2 /* FeedDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB80F9F927F7D8B2003177E2 /* FeedDateFormatter.swift */; };
 		EBCA936927F751430013260B /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCA936727F751420013260B /* PostCell.swift */; };
@@ -70,7 +73,6 @@
 		EB039AD327F6297A0039EF76 /* ArticlesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesService.swift; sourceTree = "<group>"; };
 		EB039AD627F637920039EF76 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		EB039AD827F6E3480039EF76 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
-		EB039AD927F6E3480039EF76 /* FeedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedView.xib; sourceTree = "<group>"; };
 		EB178A1327F5A27B005C5536 /* Cars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cars.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB178A1627F5A27B005C5536 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB178A1F27F5A27E005C5536 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -81,6 +83,10 @@
 		EB178A3327F5A27E005C5536 /* CarsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB178A3727F5A27E005C5536 /* CarsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsUITests.swift; sourceTree = "<group>"; };
 		EB178A3927F5A27E005C5536 /* CarsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		EB7D2F8827F8C9DE00908500 /* NavigationBar+Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationBar+Appearance.swift"; sourceTree = "<group>"; };
+		EB7D2F8A27F8D38E00908500 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		EB7D2F9027F9078700908500 /* FeedAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAssembly.swift; sourceTree = "<group>"; };
+		EB7D2F9227F9080000908500 /* Assembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembly.swift; sourceTree = "<group>"; };
 		EB80F9F727F7C7A5003177E2 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		EB80F9F927F7D8B2003177E2 /* FeedDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FeedDateFormatter.swift; path = Cars/Presentation/Modules/Feed/FeedDateFormatter.swift; sourceTree = SOURCE_ROOT; };
 		EBCA936727F751420013260B /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
@@ -143,9 +149,10 @@
 		EB039AB827F6145B0039EF76 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				EB7D2F9027F9078700908500 /* FeedAssembly.swift */,
 				EB80F9F927F7D8B2003177E2 /* FeedDateFormatter.swift */,
 				EB039AD827F6E3480039EF76 /* FeedViewController.swift */,
-				EB039AD927F6E3480039EF76 /* FeedView.xib */,
+				EB7D2F8A27F8D38E00908500 /* FeedViewModel.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -208,9 +215,8 @@
 			isa = PBXGroup;
 			children = (
 				EBCA936D27F7516B0013260B /* Cells */,
-				EBCA937327F78CF30013260B /* Extensions */,
+				EBCA937327F78CF30013260B /* Common */,
 				EBCA936C27F751660013260B /* Modules */,
-				EBCA936E27F765820013260B /* Views */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -294,20 +300,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		EBCA936E27F765820013260B /* Views */ = {
+		EBCA937327F78CF30013260B /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				EBCA937127F78CEC0013260B /* LinearGradientView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		EBCA937327F78CF30013260B /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
+				EB7D2F9227F9080000908500 /* Assembly.swift */,
 				EBCA936F27F765970013260B /* Label+LineHeight.swift */,
+				EBCA937127F78CEC0013260B /* LinearGradientView.swift */,
+				EB7D2F8827F8C9DE00908500 /* NavigationBar+Appearance.swift */,
 			);
-			path = Extensions;
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -421,7 +422,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB178A2327F5A27E005C5536 /* LaunchScreen.storyboard in Resources */,
-				EB039ADB27F6E3480039EF76 /* FeedView.xib in Resources */,
 				EB178A2027F5A27E005C5536 /* Assets.xcassets in Resources */,
 				EBCA936A27F751430013260B /* PostCell.xib in Resources */,
 			);
@@ -569,6 +569,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB039AC927F618DF0039EF76 /* RequestMethod.swift in Sources */,
+				EB7D2F8B27F8D38E00908500 /* FeedViewModel.swift in Sources */,
 				EB80F9FA27F7D8B2003177E2 /* FeedDateFormatter.swift in Sources */,
 				EB039AD227F627C60039EF76 /* ArticlesEndpoint.swift in Sources */,
 				EB039ADA27F6E3480039EF76 /* FeedViewController.swift in Sources */,
@@ -576,11 +577,14 @@
 				EB039ACE27F619B70039EF76 /* Article.swift in Sources */,
 				EB80F9F827F7C7A5003177E2 /* Post.swift in Sources */,
 				EB039AD727F637920039EF76 /* Response.swift in Sources */,
+				EB7D2F9327F9080000908500 /* Assembly.swift in Sources */,
 				EB039AD027F61F1A0039EF76 /* HTTPClient.swift in Sources */,
 				EB039AC727F618B60039EF76 /* Endpoint.swift in Sources */,
 				EBCA937027F765970013260B /* Label+LineHeight.swift in Sources */,
 				EBCA936927F751430013260B /* PostCell.swift in Sources */,
 				EBCA937227F78CEC0013260B /* LinearGradientView.swift in Sources */,
+				EB7D2F8927F8C9DE00908500 /* NavigationBar+Appearance.swift in Sources */,
+				EB7D2F9127F9078700908500 /* FeedAssembly.swift in Sources */,
 				EB039AD427F6297A0039EF76 /* ArticlesService.swift in Sources */,
 				EB178A1727F5A27B005C5536 /* AppDelegate.swift in Sources */,
 			);

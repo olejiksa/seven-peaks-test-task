@@ -53,7 +53,9 @@ extension HTTPClient {
                                                         response: response,
                                                         responseModel: responseModel,
                                                         error: error)
-            completion(result)
+            DispatchQueue.main.async {
+                completion(result)
+            }
         }
 
         task.resume()

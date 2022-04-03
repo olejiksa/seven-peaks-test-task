@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Article: Decodable {
+struct Article: Decodable, Unique {
 
     struct Item: Decodable {
 
@@ -38,7 +38,7 @@ struct Article: Decodable {
         case lastModifiedDate = "changed"
     }
 
-    let identifier: Int
+    let identifier: Int64
     let title: String
     let ingress: String
     let imageURL: URL?

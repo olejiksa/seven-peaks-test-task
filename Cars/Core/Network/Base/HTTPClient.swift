@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol HTTPClient {
+protocol HTTPClient: Connection {
 
     @available(iOS 15, *)
     func sendRequest<T: Decodable>(endpoint: Endpoint,
@@ -24,6 +24,10 @@ extension HTTPClient {
     @available(iOS 15, *)
     func sendRequest<T: Decodable>(endpoint: Endpoint,
                                    responseModel: T.Type) async -> Result<T, RequestError> {
+        guard !hasConnectivity else {
+            return .failure(.noInternet)
+        }
+
         guard let url = URL(string: endpoint.baseURL + endpoint.path) else {
             return .failure(.invalidURL)
         }
@@ -41,7 +45,7 @@ extension HTTPClient {
     @available(iOS, deprecated: 15)
     func sendRequest<T: Decodable>(endpoint: Endpoint,
                                    responseModel: T.Type,
-                                   completion: @escaping (Result<T, RequestError>) -> ()) {
+                                   completion: @escaping (Result<T, RequestError>) -> Void) {
         guard let url = URL(string: endpoint.baseURL + endpoint.path) else {
             completion(.failure(.invalidURL))
             return

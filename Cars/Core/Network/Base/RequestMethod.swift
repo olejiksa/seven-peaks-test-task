@@ -6,6 +6,7 @@
 //
 
 enum RequestMethod: String {
+
     case delete = "DELETE"
     case get = "GET"
     case patch = "PATCH"

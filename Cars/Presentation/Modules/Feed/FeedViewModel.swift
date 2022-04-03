@@ -63,17 +63,19 @@ final class FeedViewModel {
 
 private extension FeedViewModel {
 
-    func complete(to result: Result<Response<Article>, RequestError>) {
+    func complete(to result: Result<[Article], RequestError>) {
         loadInProgress.accept(false)
 
         switch result {
-        case .success(let response):
-            posts.accept(response.items.map {
-                let date = dateFormatter.string(from: $0.publishDate)
-                return Post(imageURL: $0.imageURL, ingress: $0.ingress, title: $0.title, date: date)
-            })
+        case .success(let articles):
+            posts.accept(articles.map(post))
         case .failure(let error):
             onShowError.accept(error.description)
         }
+    }
+
+    func post(from article: Article) -> Post {
+        let date = dateFormatter.string(from: article.publishDate)
+        return Post(imageURL: article.imageURL, ingress: article.ingress, title: article.title, date: date)
     }
 }

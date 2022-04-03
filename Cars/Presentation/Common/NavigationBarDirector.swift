@@ -1,5 +1,5 @@
 //
-//  NavigationBarAppearance.swift
+//  NavigationBarDirector.swift
 //  Cars
 //
 //  Created by Oleg Samoylov on 03.04.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UINavigationBar {
+struct NavigationBarDirector {
 
     // MARK: Public Types
 
@@ -23,13 +23,13 @@ extension UINavigationBar {
 
     // MARK: Public
 
-    static func configureAppearance() {
+    func setupAppearance() {
         if #available(iOS 15, *) {
             let navigationBarAppearance = UINavigationBarAppearance()
             navigationBarAppearance.configureWithDefaultBackground()
 
             navigationBarAppearance.backgroundColor = #colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.2980392157, alpha: 1)
-            navigationBarAppearance.titleTextAttributes = UINavigationBar.Constants.titleTextAttributes
+            navigationBarAppearance.titleTextAttributes = Constants.titleTextAttributes
 
             let navigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
             navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)

@@ -112,7 +112,9 @@ private extension FeedViewController {
     func setupUI() {
         title = Constants.title
         view.backgroundColor = .black
-        UINavigationBar.configureAppearance()
+
+        let director = NavigationBarDirector()
+        director.setupAppearance()
     }
 
     func setupConstaints() {

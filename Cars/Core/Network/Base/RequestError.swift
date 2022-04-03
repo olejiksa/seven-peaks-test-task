@@ -6,11 +6,13 @@
 //
 
 enum RequestError: Error {
+
     case decode
     case invalidURL
     case noResponse
     case unauthorized
     case unexpectedStatusCode
+    case noInternet
     case unknown
 }
 
@@ -24,6 +26,8 @@ extension RequestError: CustomStringConvertible {
             return "Decode error"
         case .unauthorized:
             return "Session expired"
+        case .noInternet:
+            return "No Internet"
         default:
             return "Unknown error"
         }

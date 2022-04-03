@@ -14,13 +14,27 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        setupWindow()
+        setupNavigationBar()
+        return true
+    }
+}
+
+// MARK: - Private
+
+private extension AppDelegate {
+
+    func setupWindow() {
         let window = UIWindow()
         let viewController = FeedAssembly().viewController
         let navigationController = UINavigationController(rootViewController: viewController)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
-        UINavigationBar.configureAppearance()
-        return true
+    }
+
+    func setupNavigationBar() {
+        let director = NavigationBarDirector()
+        director.setupAppearance()
     }
 }

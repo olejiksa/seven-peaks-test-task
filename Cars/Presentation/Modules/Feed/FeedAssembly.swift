@@ -12,7 +12,8 @@ struct FeedAssembly: Assembly {
     let viewController: UIViewController
 
     init() {
-        let articlesService = ArticlesService()
+        let storage = Storage()
+        let articlesService = ArticlesService(storage: storage)
         let viewModel = FeedViewModel(articlesService: articlesService)
         viewController = FeedViewController(viewModel: viewModel)
     }

@@ -30,7 +30,7 @@ extension ArticlesEndpoint: Endpoint {
     var header: [String: String]? {
         switch self {
         case .getAll:
-            return ["Content-Type": "application/json;charset=utf-8"]
+            return nil
         }
     }
 

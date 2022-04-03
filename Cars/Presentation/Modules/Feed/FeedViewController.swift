@@ -125,9 +125,8 @@ private extension FeedViewController {
             .disposed(by: disposeBag)
 
         refreshControl.rx.controlEvent(.valueChanged)
-            .subscribe(onNext: { [weak viewModel, weak refreshControl, weak tableView] in
+            .subscribe(onNext: { [weak viewModel, weak refreshControl] in
                 refreshControl?.endRefreshing()
-                tableView?.setContentOffset(.zero, animated: true)
                 viewModel?.getPosts(ignoreLoadingHUD: true)
             })
             .disposed(by: disposeBag)
@@ -163,6 +162,8 @@ private extension FeedViewController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: Constants.ok, style: .default)
         alertController.addAction(okAction)
-        present(alertController, animated: true)
+        present(alertController, animated: true) { [weak tableView] in
+            tableView?.setContentOffset(.zero, animated: true)
+        }
     }
 }

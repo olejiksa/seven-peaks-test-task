@@ -17,6 +17,7 @@ final class FeedViewModel {
     }
 
     let onShowError = BehaviorRelay<String?>(value: nil)
+    let onShowNoData = BehaviorRelay<Bool>(value: false)
 
     var onShowLoading: Observable<Bool> {
         loadInProgress
@@ -41,20 +42,24 @@ final class FeedViewModel {
 
     // MARK: Public
 
-    func getPosts() {
-        DispatchQueue.main.async {
-            self.loadInProgress.accept(true)
+    func getPosts(ignoreLoadingHUD: Bool = false) {
+        if !ignoreLoadingHUD {
+            DispatchQueue.main.async {
+                self.loadInProgress.accept(true)
+            }
         }
 
         if #available(iOS 15, *) {
             Task(priority: .background) {
                 let result = await articlesService.getAll()
                 DispatchQueue.main.async {
-                    self.complete(to: result)
+                    self.complete(to: result, ignoreLoadingHUD: ignoreLoadingHUD)
                 }
             }
         } else {
-            articlesService.getAll(completion: complete)
+            articlesService.getAll { [weak self] in
+                self?.complete(to: $0, ignoreLoadingHUD: ignoreLoadingHUD)
+            }
         }
     }
 }
@@ -63,14 +68,18 @@ final class FeedViewModel {
 
 private extension FeedViewModel {
 
-    func complete(to result: Result<[Article], RequestError>) {
-        loadInProgress.accept(false)
+    func complete(to result: Result<[Article], RequestError>, ignoreLoadingHUD: Bool) {
+        if !ignoreLoadingHUD {
+            loadInProgress.accept(false)
+        }
 
         switch result {
         case .success(let articles):
             posts.accept(articles.map(post))
+            onShowNoData.accept(articles.isEmpty)
         case .failure(let error):
             onShowError.accept(error.description)
+            onShowNoData.accept(true)
         }
     }
 

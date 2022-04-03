@@ -44,6 +44,7 @@
 		EBEB9D8027F9FFFF00B6C518 /* AnyAbsorber.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEB9D7F27F9FFFF00B6C518 /* AnyAbsorber.swift */; };
 		EBEB9D8227FA0B6000B6C518 /* Emitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEB9D8127FA0B6000B6C518 /* Emitter.swift */; };
 		EBEB9D8427FA0BEB00B6C518 /* ArticleEntity+Emitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEB9D8327FA0BEB00B6C518 /* ArticleEntity+Emitter.swift */; };
+		EBEB9D8927FA2E5700B6C518 /* DateDecodingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEB9D8827FA2E5700B6C518 /* DateDecodingStrategy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,7 @@
 		EBEB9D7F27F9FFFF00B6C518 /* AnyAbsorber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyAbsorber.swift; sourceTree = "<group>"; };
 		EBEB9D8127FA0B6000B6C518 /* Emitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emitter.swift; sourceTree = "<group>"; };
 		EBEB9D8327FA0BEB00B6C518 /* ArticleEntity+Emitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEntity+Emitter.swift"; sourceTree = "<group>"; };
+		EBEB9D8827FA2E5700B6C518 /* DateDecodingStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDecodingStrategy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				EBEB9D6927F9B0C200B6C518 /* Connection.swift */,
+				EBEB9D8827FA2E5700B6C518 /* DateDecodingStrategy.swift */,
 				EB039AC627F618B60039EF76 /* Endpoint.swift */,
 				EB039ACF27F61F1A0039EF76 /* HTTPClient.swift */,
 				EB039ACA27F618F50039EF76 /* RequestError.swift */,
@@ -544,6 +547,7 @@
 				EB039AC927F618DF0039EF76 /* RequestMethod.swift in Sources */,
 				EB7D2F8B27F8D38E00908500 /* FeedViewModel.swift in Sources */,
 				EB80F9FA27F7D8B2003177E2 /* FeedDateFormatter.swift in Sources */,
+				EBEB9D8927FA2E5700B6C518 /* DateDecodingStrategy.swift in Sources */,
 				EB7D2F9927F9186800908500 /* Storage.swift in Sources */,
 				EB039AD227F627C60039EF76 /* ArticlesEndpoint.swift in Sources */,
 				EBEB9D6A27F9B0C200B6C518 /* Connection.swift in Sources */,

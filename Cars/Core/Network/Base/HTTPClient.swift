@@ -46,17 +46,22 @@ extension HTTPClient {
     func sendRequest<T: Decodable>(endpoint: Endpoint,
                                    responseModel: T.Type,
                                    completion: @escaping (Result<T, RequestError>) -> Void) {
+        guard hasConnectivity else {
+            completion(.failure(.noInternet))
+            return
+        }
+
         guard let url = URL(string: endpoint.baseURL + endpoint.path) else {
             completion(.failure(.invalidURL))
             return
         }
 
         let request = createRequest(url: url, endpoint: endpoint)
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            let result: Result<T, RequestError> = check(data: data,
-                                                        response: response,
+        let task = URLSession.shared.dataTask(with: request) {
+            let result: Result<T, RequestError> = check(data: $0,
+                                                        response: $1,
                                                         responseModel: responseModel,
-                                                        error: error)
+                                                        error: $2)
             DispatchQueue.main.async {
                 completion(result)
             }
@@ -94,42 +99,25 @@ private extension HTTPClient {
             return .failure(.noResponse)
         }
 
-        switch response.statusCode {
-        case 200...299:
-            do {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .custom(convert)
-                let decodedResponse = try decoder.decode(responseModel, from: data)
-                return .success(decodedResponse)
-            } catch let error {
-                print(error)
-                return .failure(.decode)
-            }
-        case 401:
-            return .failure(.unauthorized)
-        default:
-            return .failure(.unexpectedStatusCode)
+        if let requestError = RequestError(statusCode: response.statusCode) {
+            return .failure(requestError)
+        } else {
+            return decode(data: data, response: response, responseModel: responseModel)
         }
     }
 
-    func convert(using decoder: Decoder) throws -> Date {
-        let container = try decoder.singleValueContainer()
-        let date: Date?
-
-        if let string = try? container.decode(String.self) {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd.MM.YYYY HH:mm"
-            date = formatter.date(from: string)
-        } else if let number = try? container.decode(Double.self) {
-            date = Date(timeIntervalSince1970: number)
-        } else {
-            date = nil
-        }
-
-        if let date = date {
-            return date
-        } else {
-            throw RequestError.decode
+    func decode<T: Decodable>(data: Data,
+                              response: HTTPURLResponse,
+                              responseModel: T.Type) -> Result<T, RequestError> {
+        do {
+            let decoder = JSONDecoder()
+            let dateDecodingStrategy = DateDecodingStrategy()
+            decoder.dateDecodingStrategy = .custom(dateDecodingStrategy.convert)
+            let decodedResponse = try decoder.decode(responseModel, from: data)
+            return .success(decodedResponse)
+        } catch let error {
+            print(error)
+            return .failure(.decode)
         }
     }
 }

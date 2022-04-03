@@ -16,9 +16,21 @@ final class FeedViewController: UIViewController {
         static let error = "Error"
         static let title = "Cars"
         static let ok = "OK"
+        static let noData = "There are no any posts yet"
+        static let duration: CGFloat = 0.5
     }
 
     // MARK: Private Properties
+
+    private let refreshControl = UIRefreshControl()
+
+    private let noDataLabel: UILabel = {
+        let label = UILabel()
+        label.text = Constants.noData
+        label.textAlignment = .center
+        label.textColor = #colorLiteral(red: 0.7302243114, green: 0.7302241921, blue: 0.7302241921, alpha: 1)
+        return label
+    }()
 
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -82,13 +94,11 @@ private extension FeedViewController {
     func bindViewModel() {
         let cellType = PostCell.self
 
-        viewModel
-            .items
+        viewModel.items
             .bind(to: tableView.rx.items(cellIdentifier: "\(cellType)", cellType: cellType)) { $2.post = $1 }
             .disposed(by: disposeBag)
 
-        viewModel
-            .onShowLoading
+        viewModel.onShowLoading
             .map { [weak activityIndicator] stopped in
                 if stopped {
                     activityIndicator?.startAnimating()
@@ -99,19 +109,34 @@ private extension FeedViewController {
             .subscribe()
             .disposed(by: disposeBag)
 
-        viewModel
-            .onShowError
+        viewModel.onShowError
             .map { [weak self] in
                 guard let message = $0 else { return }
                 self?.showModal(title: Constants.error, message: message)
             }
             .subscribe()
             .disposed(by: disposeBag)
+
+        viewModel.onShowNoData
+            .map { [weak tableView, weak noDataLabel] hideData in
+                tableView?.backgroundView = hideData ? noDataLabel : nil
+            }
+            .subscribe()
+            .disposed(by: disposeBag)
+
+        refreshControl.rx.controlEvent(.valueChanged)
+            .subscribe(onNext: { [weak viewModel, weak refreshControl, weak tableView] in
+                refreshControl?.endRefreshing()
+                tableView?.setContentOffset(.zero, animated: true)
+                viewModel?.getPosts(ignoreLoadingHUD: true)
+            })
+            .disposed(by: disposeBag)
     }
 
     func setupUI() {
         title = Constants.title
         view.backgroundColor = .black
+        tableView.refreshControl = refreshControl
 
         let director = NavigationBarDirector()
         director.setupAppearance()

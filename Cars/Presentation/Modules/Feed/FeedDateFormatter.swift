@@ -9,6 +9,21 @@ import Foundation
 
 final class FeedDateFormatter: DateFormatter {
 
+    private let currentDate: Date
+    private let currentLocale: Locale
+
+    init(currentDate: Date = .init(),
+         currentLocale: Locale = .current) {
+        self.currentDate = currentDate
+        self.currentLocale = currentLocale
+
+        super.init()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func string(from date: Date) -> String {
         let dateFormat: String
         let timeFormat: String
@@ -35,13 +50,13 @@ final class FeedDateFormatter: DateFormatter {
 private extension FeedDateFormatter {
 
     var isSetTo24Hours: Bool {
-        let formatter = DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: .current)
+        let formatter = DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: currentLocale)
         return formatter?.contains("a") != true
     }
 
     func isCurrentYear(_ date: Date) -> Bool {
-        let dateYear = Calendar.current.component(.year, from: date)
-        let currentYear = Calendar.current.component(.year, from: .init())
+        let dateYear = calendar.component(.year, from: date)
+        let currentYear = calendar.component(.year, from: currentDate)
         return dateYear == currentYear
     }
 }

@@ -17,7 +17,6 @@ final class FeedViewController: UIViewController {
         static let title = "Cars"
         static let ok = "OK"
         static let noData = "There are no any posts yet"
-        static let duration: CGFloat = 0.5
     }
 
     // MARK: Private Properties

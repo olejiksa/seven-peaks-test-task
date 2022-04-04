@@ -34,15 +34,15 @@ final class FeedViewModel {
 
     // MARK: Dependency Injection
 
-    private let articlesService: ArticlesService
+    private let articlesService: ArticlesServiceable
 
-    init(articlesService: ArticlesService) {
+    init(articlesService: ArticlesServiceable) {
         self.articlesService = articlesService
     }
 
     // MARK: Public
 
-    func getPosts(ignoreLoadingHUD: Bool = false) {
+    func getPosts(ignoreLoadingHUD: Bool = false, completion: (() -> Void)? = nil) {
         if !ignoreLoadingHUD {
             DispatchQueue.main.async {
                 self.loadInProgress.accept(true)
@@ -54,11 +54,13 @@ final class FeedViewModel {
                 let result = await articlesService.getAll()
                 DispatchQueue.main.async {
                     self.complete(to: result, ignoreLoadingHUD: ignoreLoadingHUD)
+                    completion?()
                 }
             }
         } else {
             articlesService.getAll { [weak self] in
                 self?.complete(to: $0, ignoreLoadingHUD: ignoreLoadingHUD)
+                completion?()
             }
         }
     }

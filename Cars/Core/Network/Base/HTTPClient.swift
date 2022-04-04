@@ -101,22 +101,13 @@ private extension HTTPClient {
 
         if let requestError = RequestError(statusCode: response.statusCode) {
             return .failure(requestError)
-        } else {
-            return decode(data: data, response: response, responseModel: responseModel)
         }
-    }
 
-    func decode<T: Decodable>(data: Data,
-                              response: HTTPURLResponse,
-                              responseModel: T.Type) -> Result<T, RequestError> {
         do {
-            let decoder = JSONDecoder()
-            let dateDecodingStrategy = DateDecodingStrategy()
-            decoder.dateDecodingStrategy = .custom(dateDecodingStrategy.convert)
-            let decodedResponse = try decoder.decode(responseModel, from: data)
+            let parser = JSONParser()
+            let decodedResponse = try parser.decode(data: data, responseModel: responseModel)
             return .success(decodedResponse)
-        } catch let error {
-            print(error)
+        } catch {
             return .failure(.decode)
         }
     }

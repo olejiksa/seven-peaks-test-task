@@ -9,6 +9,24 @@
 			<key>orderHint</key>
 			<integer>8</integer>
 		</dict>
+		<key>CarsTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>EB178A1227F5A27B005C5536</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EB178A2827F5A27E005C5536</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>

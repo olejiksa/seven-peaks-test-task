@@ -15,7 +15,8 @@ struct DateDecodingStrategy {
 
         if let string = try? container.decode(String.self) {
             let formatter = DateFormatter()
-            formatter.dateFormat = "dd.MM.YYYY HH:mm"
+            formatter.dateFormat = "dd.MM.yyyy HH:mm"
+            formatter.timeZone = .init(abbreviation: "UTC")
             date = formatter.date(from: string)
         } else if let number = try? container.decode(Double.self) {
             date = Date(timeIntervalSince1970: number)

@@ -27,7 +27,7 @@ final class FeedViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func testGetPostsWithSuccess() {
+    func testGetPost() {
         // arrange
         let expectation = expectation(description: #function)
 

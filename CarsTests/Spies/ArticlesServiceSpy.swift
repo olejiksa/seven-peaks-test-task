@@ -9,16 +9,15 @@
 
 final class ArticlesServiceSpy: ArticlesServiceable {
 
-    var result: Result<[Article], RequestError> = .success([])
     private(set) var getAllCalled = false
 
     func getAll() async -> Result<[Article], RequestError> {
         getAllCalled = true
-        return result
+        return .success([])
     }
 
     func getAll(completion: @escaping (Result<[Article], RequestError>) -> Void) {
         getAllCalled = true
-        completion(result)
+        completion(.success([]))
     }
 }
